@@ -1,0 +1,72 @@
+run:
+  timeout: 10m
+linters:
+  disable-all: false
+  enable:
+    - misspell
+    - gofmt
+    - unconvert
+    - errcheck
+    - errorlint
+    - staticcheck
+    - ineffassign
+    - gosimple
+    - deadcode
+    - structcheck
+    - typecheck
+    - varcheck
+    - gocyclo
+    - gosec
+    - nakedret
+    - prealloc
+    - revive
+    - wrapcheck
+
+linters-settings:
+  cyclop:
+    # the maximal code complexity to report
+    max-complexity: 10
+    # the maximal average package complexity. If it's higher than 0.0 (float) the check is enabled (default 0.0)
+    package-average: 0.0
+    # should ignore tests (default false)
+    skip-tests: false
+
+  revive:
+    # see https://github.com/mgechev/revive#available-rules for details.
+    ignore-generated-header: true
+    severity: warning
+    rules:
+      - name: indent-error-flow
+        severity: warning
+      - name: add-constant
+        severity: warning
+        arguments:
+          - maxLitCount: "3"
+            allowStrs: '"","%s","%s/%s"'
+            allowInts: "0,1,2,3,4,5"
+      - name: confusing-naming
+        severity: warning
+      - name: error-naming
+        severity: warning
+      - name: package-comments
+        severity: warning
+      - name: error-return
+        severity: error
+      - name: confusing-results
+        severity: warning
+      # - name: max-public-structs
+      #   severity: warning
+      #   arguments:
+      #     - 3
+      - name: exported
+        severity: warning
+        arguments: ["checkPrivateReceivers"]
+
+issues:
+  # Excluding configuration per-path, per-linter, per-text and per-source
+  exclude-rules:
+    # Exclude some linters from running on tests files.
+    - path: _test\.go
+      linters:
+        - gosec
+        - revive

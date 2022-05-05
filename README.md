@@ -1,16 +1,20 @@
 # Sentry hook for Logrus logger
 
+[![Tests](https://github.com/chadsr/logrus-sentry/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/chadsr/logrus-sentry/actions/workflows/tests.yml)
+[![codecov](https://codecov.io/gh/chadsr/logrus-sentry/branch/master/graph/badge.svg?token=C4GM92GQ3I)](https://codecov.io/gh/chadsr/logrus-sentry)
+
 [Sentry](https://github.com/getsentry/sentry-go) hook for [Logrus](https://github.com/sirupsen/logrus) logger.
 
 ## Examples
 
 Basic:
+
 ```go
 import (
-  "github.com/sirupsen/logrus"
-  "github.com/getsentry/sentry-go"
+    "github.com/sirupsen/logrus"
+    "github.com/getsentry/sentry-go"
 
-  "github.com/makasim/sentryhook"
+    sentryhook "github.com/chadsr/logrus-sentry"
 )
 
 func main() {
@@ -29,10 +33,10 @@ Customize Sentry event:
 
 ```go
 import (
-  "github.com/sirupsen/logrus"
-  "github.com/getsentry/sentry-go"
+    "github.com/sirupsen/logrus"
+    "github.com/getsentry/sentry-go"
 
-  "github.com/makasim/sentryhook"
+    sentryhook "github.com/chadsr/logrus-sentry"
 )
 
 func main() {
@@ -53,22 +57,22 @@ func main() {
 }
 
 func newConverter() sentryhook.Converter {
-	return func(entry *logrus.Entry, hub *sentry.Hub) *sentry.Event {
-		event := sentryhook.DefaultConverter(entry, hub)
+    return func(entry *logrus.Entry, hub *sentry.Hub) *sentry.Event {
+        event := sentryhook.DefaultConverter(entry, hub)
 
-		if pkg, ok := entry.Data["pkg"].(string); ok {
-			event.Logger = pkg
-		}
+        if pkg, ok := entry.Data["pkg"].(string); ok {
+            event.Logger = pkg
+        }
 
-		if corrID, ok := entry.Data["corr_id"].(string); ok {
-			event.Tags["corr_id"] = corrID
-		}
+        if corrID, ok := entry.Data["corr_id"].(string); ok {
+            event.Tags["corr_id"] = corrID
+        }
 
-		if userID, ok := entry.Data["user_id"]; ok {
-			event.Tags["user_id"] = fmt.Sprintf("%v", userID)
-		}
+        if userID, ok := entry.Data["user_id"]; ok {
+            event.Tags["user_id"] = fmt.Sprintf("%v", userID)
+        }
 
-		return event
-	}
+        return event
+    }
 }
 ```

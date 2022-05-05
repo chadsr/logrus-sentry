@@ -1,4 +1,4 @@
-package sentryhook
+package hook
 
 import (
 	"reflect"
@@ -7,17 +7,15 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-var (
-	levelMap = map[logrus.Level]sentry.Level{
-		logrus.TraceLevel: sentry.LevelDebug,
-		logrus.DebugLevel: sentry.LevelDebug,
-		logrus.InfoLevel:  sentry.LevelInfo,
-		logrus.WarnLevel:  sentry.LevelWarning,
-		logrus.ErrorLevel: sentry.LevelError,
-		logrus.FatalLevel: sentry.LevelFatal,
-		logrus.PanicLevel: sentry.LevelFatal,
-	}
-)
+var levelMap = map[logrus.Level]sentry.Level{
+	logrus.TraceLevel: sentry.LevelDebug,
+	logrus.DebugLevel: sentry.LevelDebug,
+	logrus.InfoLevel:  sentry.LevelInfo,
+	logrus.WarnLevel:  sentry.LevelWarning,
+	logrus.ErrorLevel: sentry.LevelError,
+	logrus.FatalLevel: sentry.LevelFatal,
+	logrus.PanicLevel: sentry.LevelFatal,
+}
 
 type Converter func(entry *logrus.Entry, event *sentry.Event, hub *sentry.Hub)
 
@@ -25,10 +23,10 @@ type Option func(h *Hook)
 
 type Hook struct {
 	hub       *sentry.Hub
-	levels    []logrus.Level
 	tags      map[string]string
 	extra     map[string]interface{}
 	converter Converter
+	levels    []logrus.Level
 }
 
 func New(levels []logrus.Level, options ...Option) Hook {
