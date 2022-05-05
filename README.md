@@ -10,7 +10,7 @@ import (
   "github.com/sirupsen/logrus"
   "github.com/getsentry/sentry-go"
 
-  "github.com/makasim/sentryhook"
+  "module github.com/chadsr/logrus-sentry"
 )
 
 func main() {
