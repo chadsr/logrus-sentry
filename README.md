@@ -1,5 +1,7 @@
 # Sentry hook for Logrus logger
 
+[![Tests](https://github.com/chadsr/logrus-sentry/actions/workflows/tests.yml/badge.svg)](https://github.com/chadsr/logrus-sentry/actions/workflows/tests.yml)
+
 [Sentry](https://github.com/getsentry/sentry-go) hook for [Logrus](https://github.com/sirupsen/logrus) logger.
 
 ## Examples
